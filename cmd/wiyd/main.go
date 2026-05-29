@@ -8,11 +8,11 @@ import (
 	"sort"
 	"time"
 
-	"github.com/OnlyManuel/whoisyourdaddy/internal/correlator"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/models"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/reporter"
-	"github.com/OnlyManuel/whoisyourdaddy/internal/ui"
-	"github.com/OnlyManuel/whoisyourdaddy/sources"
+	"github.com/0nlyManuel/whoisyourdaddy/internal/correlator"
+	"github.com/0nlyManuel/whoisyourdaddy/internal/models"
+	"github.com/0nlyManuel/whoisyourdaddy/internal/reporter"
+	"github.com/0nlyManuel/whoisyourdaddy/internal/ui"
+	"github.com/0nlyManuel/whoisyourdaddy/sources"
 )
 
 func runSource(src sources.Source, ctx context.Context, target string) models.Result {
@@ -24,18 +24,23 @@ func runSource(src sources.Source, ctx context.Context, target string) models.Re
 }
 
 func main() {
-	flag.Usage = ui.PrintHelp
+	flag.Usage = func() {
+		ui.PrintBanner()
+		ui.PrintHelp()
+	}
+
 	target := flag.String("target", "", "target domain")
 	wordlist := flag.String("wordlist", "", "external wordlist to use for dns enumeration")
 	output := flag.String("output", "report.html", "output report file path")
 	flag.Parse()
 
-	ui.PrintBanner()
-
 	if *target == "" {
+		ui.PrintBanner()
 		ui.PrintHelp()
 		os.Exit(1)
 	}
+
+	ui.PrintBanner()
 
 	ctx := context.Background()
 	srcs := []sources.Source{sources.CrtSh{}, sources.DNSEnum{Wordlist: *wordlist}}
