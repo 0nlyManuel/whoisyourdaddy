@@ -3,7 +3,7 @@ package correlator
 import (
 	"strings"
 
-	"github.com/0nlyManu/whoisyourdaddy/internal/models"
+	"github.com/0nlyManuel/whoisyourdaddy/internal/models"
 )
 
 type Correlator struct{}
